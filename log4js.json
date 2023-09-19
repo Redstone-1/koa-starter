@@ -10,6 +10,6 @@
     }
   },
   "categories": {
-    "default": { "appenders": ["console", "file"], "level": "info" }
+    "default": { "appenders": ["console", "file"], "level": "error" }
   }
 }

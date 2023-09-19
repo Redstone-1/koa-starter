@@ -16,7 +16,7 @@
     "@typescript-eslint/eslint-plugin"
   ],
   "rules": {
-    "semi": 2,
+    "semi": 0,
     "no-undef": 0,
     "no-console": 0,
     "no-use-before-define": 2,

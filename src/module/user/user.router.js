@@ -4,9 +4,9 @@ import {
   verifyUser,
   crpytPassword,
   verifyLogin,
-} from '../middleware/user.middleware';
-import { auth } from '../middleware/auth.middleware';
-import userController from '../controller/user.controller';
+} from '../../middleware/user.middleware';
+import { auth } from '../../middleware/auth.middleware';
+import userController from './user.controller';
 
 const {
   register,
@@ -24,9 +24,5 @@ router.post('/login', userValidator, verifyLogin, login);
 
 // 修改密码接口
 router.patch('/changePassword', auth, crpytPassword, changePassword);
-
-router.get('/', async (ctx) => {
-  ctx.body = 'hello';
-});
 
 export default router;

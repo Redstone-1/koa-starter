@@ -1,5 +1,5 @@
 import bcrypt from 'bcryptjs';
-import userService from '../service/user.service';
+import userService from '../module/user/user.service';
 import {
   userFormateError,
   userAlreadyExited,
@@ -9,12 +9,12 @@ import {
   invalidPassword
 } from "../error/errorTypes";
 
-const { getUerInfo } = userService;
+const { getUserInfo } = userService;
 
 export const userValidator = async (ctx, next) => {
-  const { user_name, password } = ctx.request.body;
+  const { userName, password } = ctx.request.body;
   // 合法性
-  if (!user_name || !password) {
+  if (!userName || !password) {
     console.error('用户名或密码为空', ctx.request.body);
     ctx.app.emit('error', userFormateError, ctx);
     return;
@@ -24,12 +24,12 @@ export const userValidator = async (ctx, next) => {
 };
 
 export const verifyUser = async (ctx, next) => {
-  const { user_name } = ctx.request.body;
+  const { userName } = ctx.request.body;
   try {
-    const res = await getUerInfo({ user_name });
+    const res = await getUserInfo({ userName });
 
     if (res) {
-      console.error('用户名已经存在', { user_name });
+      console.error('用户名已经存在', { userName });
       ctx.app.emit('error', userAlreadyExited, ctx);
       return;
     }
@@ -55,13 +55,13 @@ export const crpytPassword = async (ctx, next) => {
 
 export const verifyLogin = async (ctx, next) => {
   // 1. 判断用户是否存在(不存在:报错)
-  const { user_name, password } = ctx.request.body;
+  const { userName, password } = ctx.request.body;
 
   try {
-    const res = await getUerInfo({ user_name });
+    const res = await getUserInfo({ userName });
 
     if (!res) {
-      console.error('用户名不存在', { user_name });
+      console.error('用户名不存在', { userName });
       ctx.app.emit('error', userDoesNotExist, ctx);
       return;
     }

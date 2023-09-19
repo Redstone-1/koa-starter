@@ -12,7 +12,7 @@ export const auth = async (ctx, next) => {
   console.log(token);
 
   try {
-    // user中包含了payload的信息(id, user_name, is_admin)
+    // user中包含了payload的信息(id, userName, isAdmin)
     const user = jwt.verify(token, JWT_SECRET);
     ctx.state.user = user;
   } catch (err) {
@@ -30,9 +30,9 @@ export const auth = async (ctx, next) => {
 };
 
 export const hadAdminPermission = async (ctx, next) => {
-  const { is_admin } = ctx.state.user;
+  const { isAdmin } = ctx.state.user;
 
-  if (!is_admin) {
+  if (!isAdmin) {
     console.error('该用户没有管理员的权限', ctx.state.user);
     return ctx.app.emit('error', hasNotAdminPermission, ctx);
   }

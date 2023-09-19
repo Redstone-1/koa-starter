@@ -10,6 +10,10 @@ import {
 const sequelize = new Sequelize(MYSQL_DB, MYSQL_USER, MYSQL_PWD, {
   host: MYSQL_HOST,
   dialect: 'mysql',
+  dialectOptions: {
+    dateStrings: true,
+    timezone: '+08:00', // 设置为中国时区
+  },
 });
 
 sequelize
