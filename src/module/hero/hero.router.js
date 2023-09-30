@@ -1,31 +1,23 @@
 import KoaRouter from 'koa-router';
-// import {
-//   verifyLogin
-// } from '../middleware/user.middleware';
-// import { auth } from '../middleware/auth.middleware';
+import { auth } from '../../middleware/auth.middleware';
 import heroController from './hero.controller';
-
-const {
-  getHero,
-  getAllHero,
-  addHero,
-  updateHero,
-  delHero,
-} = heroController;
+import { verifyHeroNotExist, verifyHeroIsExist } from './middleware/hero.middleware'
 
 const router = new KoaRouter({ prefix: '/hero' });
 
-// 注册接口
-router.post('/create', addHero);
+// 新增接口
+router.post('/create', auth, verifyHeroIsExist, heroController.create);
 
-// 登录接口
-router.post('/delete', delHero);
+// 删除接口
+router.post('/delete', auth, verifyHeroNotExist, heroController.delete);
 
-// 修改密码接口
-router.post('/update', updateHero);
+// 修改接口
+router.post('/update', auth, verifyHeroNotExist, heroController.update);
 
-router.get('/getHero', getHero);
+// 获取单个英雄信息
+router.get('/getHero', heroController.get);
 
-router.post('/getHeroList', getAllHero);
+// 获取英雄列表
+router.post('/getHeroList', heroController.getAll);
 
 export default router;

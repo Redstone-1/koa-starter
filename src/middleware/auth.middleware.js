@@ -4,15 +4,13 @@ import {
   tokenExpiredError,
   invalidToken,
   hasNotAdminPermission,
-} from '../error/errorTypes';
+} from '../error/handleError';
 
 export const auth = async (ctx, next) => {
   const { authorization = '' } = ctx.request.header;
   const token = authorization.replace('Bearer ', '');
-  console.log(token);
 
   try {
-    // user中包含了payload的信息(id, userName, isAdmin)
     const user = jwt.verify(token, JWT_SECRET);
     ctx.state.user = user;
   } catch (err) {

@@ -3,13 +3,12 @@ import Hero from './hero.model';
 import { formatTime } from '../../utils/formatTime';
 
 class HeroService {
-  async createHero(bodyData) {
-    const { heroName, date, strongLevel, position } = bodyData;
+  async create({ heroName, date, strongLevel, position }) {
     const res = await Hero.create({ heroName, date, strongLevel, position });
     return res.dataValues;
   }
 
-  async getHeroInfo({ heroName = '' }) {
+  async get({ heroName = '' }) {
     const whereOpt = {};
 
     heroName && Object.assign(whereOpt, { heroName });
@@ -33,7 +32,7 @@ class HeroService {
     return res?.id ? res.dataValues : null;
   }
 
-  async getAllHeroInfo({ heroName = '', date = '', strongLevel = '', position = [], pageNum = 1, pageSize = 10 }) {
+  async getAll({ heroName = '', date = '', strongLevel = '', position = [], pageNum = 1, pageSize = 10 }) {
     const whereOpt = {};
 
     heroName && Object.assign(whereOpt, { heroName });
@@ -67,7 +66,7 @@ class HeroService {
     };
   }
 
-  async updateHero({ heroName = '', date = '', strongLevel = '', position = '' }) {
+  async update({ heroName = '', date = '', strongLevel = '', position = '' }) {
     const whereOpt = { heroName };
     const newHero = {};
 
@@ -80,7 +79,7 @@ class HeroService {
     return res?.[0] > 0;
   }
 
-  async deleteHero({ heroName = '' }) {
+  async delete({ heroName = '' }) {
     const whereOpt = { heroName };
 
     const res = await Hero.destroy({ where: whereOpt });

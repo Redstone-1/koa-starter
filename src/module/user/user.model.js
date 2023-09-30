@@ -22,4 +22,7 @@ const User = sequelize.define('User', {
   },
 });
 
+// 本地开发，更改 model 数据结构后把此功能打开同步表模型，生产上 model 是固定的，不要使用
+// User.sync({ alter: true });
+
 export default User;

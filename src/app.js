@@ -8,11 +8,15 @@ import { watchErrors } from './error';
 
 const app = new Koa();
 
-// 解决本地开发跨域
+/**
+ * 解决本地开发跨域
+ * 配置可接受的请求方法
+ * 配置可由前端操控的 headers 字段
+ */
 app.use(async (ctx, next) => {
   ctx.set('Access-Control-Allow-Origin', '*');
   ctx.set('Access-Control-Allow-Methods', 'GET, POST, PUT, PATCH, DELETE');
-  ctx.set('Access-Control-Allow-Headers', 'Content-Type');
+  ctx.set('Access-Control-Allow-Headers', 'Content-Type, Authorization, Accept, X-Requested-With');
   await next();
 });
 

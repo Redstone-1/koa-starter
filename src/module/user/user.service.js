@@ -1,14 +1,14 @@
 import User from './user.model';
 
 class UserService {
-  async createUser(userName, password) {
+  async create(userName, password) {
     // 插入数据
     // await表达式: promise对象的值
     const res = await User.create({ userName, password });
     return res.dataValues;
   }
 
-  async getUserInfo({ id, userName, password, isAdmin }) {
+  async get({ id, userName, password, isAdmin }) {
     const whereOpt = {};
 
     id && Object.assign(whereOpt, { id });
@@ -24,7 +24,7 @@ class UserService {
     return res ? res.dataValues : null;
   }
 
-  async updateById({ id, userName, password, isAdmin }) {
+  async update({ id, userName, password, isAdmin }) {
     const whereOpt = { id };
     const newUser = {};
 

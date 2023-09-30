@@ -1,5 +1,5 @@
 import bcrypt from 'bcryptjs';
-import userService from '../module/user/user.service';
+import userService from '../user.service';
 import {
   userFormateError,
   userAlreadyExited,
@@ -7,9 +7,7 @@ import {
   userDoesNotExist,
   userLoginError,
   invalidPassword
-} from "../error/errorTypes";
-
-const { getUserInfo } = userService;
+} from '../../../error/handleError';
 
 export const userValidator = async (ctx, next) => {
   const { userName, password } = ctx.request.body;
@@ -26,7 +24,7 @@ export const userValidator = async (ctx, next) => {
 export const verifyUser = async (ctx, next) => {
   const { userName } = ctx.request.body;
   try {
-    const res = await getUserInfo({ userName });
+    const res = await userService.get({ userName });
 
     if (res) {
       console.error('用户名已经存在', { userName });
@@ -58,7 +56,7 @@ export const verifyLogin = async (ctx, next) => {
   const { userName, password } = ctx.request.body;
 
   try {
-    const res = await getUserInfo({ userName });
+    const res = await userService.get({ userName });
 
     if (!res) {
       console.error('用户名不存在', { userName });

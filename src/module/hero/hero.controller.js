@@ -1,22 +1,14 @@
 import heroService from './hero.service';
 import httpCodes from '../../error/httpCodes';
-import { serverError } from '../../error/errorTypes';
+import { serverError } from '../../error/handleError';
 import { genResponse } from '../../error';
 
-const {
-  createHero,
-  getHeroInfo,
-  getAllHeroInfo,
-  updateHero,
-  deleteHero,
-} = heroService;
-
 class HeroController {
-  async addHero(ctx) {
-    // 2. 操作数据库
+  async create(ctx) {
     try {
-      const res = await createHero(ctx.request.body);
-      // 3. 返回结果
+      const { heroName, date, strongLevel, position } = ctx.request.body;
+      const res = await heroService.create({ heroName, date, strongLevel, position });
+
       if (res) {
         ctx.body = genResponse(httpCodes.OK, '英雄新增成功', true)
       } else {
@@ -28,14 +20,11 @@ class HeroController {
     }
   }
 
-  async updateHero(ctx) {
-    // 1. 获取数据
-    const { heroName, date, strongLevel, position } = ctx.request.body;
-
-    // 2. 操作数据库
+  async update(ctx) {
     try {
-      const res = await updateHero({ heroName, date, strongLevel, position });
-      // 3. 返回结果
+      const { heroName, date, strongLevel, position } = ctx.request.body;
+      const res = await heroService.update({ heroName, date, strongLevel, position });
+
       if (res) {
         ctx.body = genResponse(httpCodes.OK, '英雄信息修改成功', true)
       } else {
@@ -47,14 +36,12 @@ class HeroController {
     }
   }
 
-  async getAllHero(ctx) {
-    // 1. 获取数据
+  async getAll(ctx) {
     const { heroName, date, strongLevel, position, pageNum, pageSize } = ctx.request.body;
 
-    // 2. 操作数据库
     try {
-      const res = await getAllHeroInfo({ heroName, date, strongLevel, position, pageNum, pageSize });
-      // 3. 返回结果
+      const res = await heroService.getAll({ heroName, date, strongLevel, position, pageNum, pageSize });
+
       if (res) {
         ctx.body = genResponse(httpCodes.OK, '英雄列表获取成功', res)
       } else {
@@ -66,15 +53,11 @@ class HeroController {
     }
   }
 
-  async getHero(ctx) {
-    // 1. 获取数据
-    const { heroName } = ctx.request.query;
-
-    // 2. 操作数据库
+  async get(ctx) {
     try {
-      const res = await getHeroInfo({ heroName });
+      const { heroName } = ctx.request.query;
+      const res = await heroService.get({ heroName });
 
-      // 3. 返回结果
       if (res) {
         ctx.body = genResponse(httpCodes.OK, '英雄信息获取成功', res)
       } else {
@@ -85,15 +68,11 @@ class HeroController {
       ctx.app.emit('error', serverError, ctx);
     }
   }
-  async delHero(ctx) {
-    // 1. 获取数据
-    const { heroName } = ctx.request.body;
-
-    // 2. 操作数据库
+  async delete(ctx) {
     try {
-      const res = await deleteHero({ heroName });
+      const { heroName } = ctx.request.body;
+      const res = await heroService.delete({ heroName });
 
-      // 3. 返回结果
       if (res) {
         ctx.body = genResponse(httpCodes.OK, '英雄删除成功', true)
       } else {
