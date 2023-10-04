@@ -21,6 +21,12 @@ class HeroService {
     }
   }
 
+  /**
+   * transaction 建立一个事务
+   * 事务是指一次操作多个数据库，要么全部成功要么全部失败，确保多表操作的一致性
+   * 图片上传与保存其实是比较特殊的场景，使用外键关联会比较麻烦
+   * 其实多表情况下也可以使用表关联，例如一对多的建立关系
+   */
   async get({ heroId = '', heroName = '', imgIds = '' }) {
     const t = await sequelize.transaction()
     try {

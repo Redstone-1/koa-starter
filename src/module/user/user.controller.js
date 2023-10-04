@@ -34,10 +34,12 @@ class UserController {
         delete userInfo.password;
       }
 
-      ctx.body = genResponse(httpCodes.OK, '用户登录成功', { token: jwt.sign(userInfo, JWT_SECRET, { expiresIn: '1d' }) })
+      ctx.body = genResponse(httpCodes.OK, '用户登录成功', {
+        token: jwt.sign(userInfo, JWT_SECRET, { expiresIn: '1d' }),
+        userName: userInfo.userName
+      })
     } catch (err) {
       console.error('用户登录失败', err);
-      console.log(err);
       ctx.app.emit('error', userLoginError, ctx);
     }
   }
