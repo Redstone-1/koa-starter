@@ -12,6 +12,7 @@ lib
 node_modules
 dist
 dist-ssr
+upload/*
 *.local
 
 yarn.lock

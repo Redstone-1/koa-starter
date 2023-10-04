@@ -1,13 +1,13 @@
-import heroService from '../hero.service';
+import heroService from './hero.service';
 import {
   heroDoesNotExist,
   heroAlreadyExited,
-} from '../error';
-import { serverError } from '../../../error/handleError'
+} from './hero.error';
+import { serverError } from '../../error/handleError'
 
 export const verifyHeroNotExist = async (ctx, next) => {
-  const { heroName } = ctx.request.query;
   try {
+    const { heroName } = ctx.request.body;
     const res = await heroService.get({ heroName });
     if (!res) {
       console.error('英雄不存在', { heroName });
@@ -23,12 +23,12 @@ export const verifyHeroNotExist = async (ctx, next) => {
   await next();
 };
 export const verifyHeroIsExist = async (ctx, next) => {
-  const { heroName } = ctx.request.body;
   try {
-    const res = await heroService.get({ heroName });
+    const { heroName, heroId } = ctx.request.body;
+    const res = await heroService.get({ heroName, heroId });
 
     if (res) {
-      console.error('英雄已经存在存在', { heroName });
+      console.error('英雄已经存在存在', { heroName, heroId });
       ctx.app.emit('error', heroAlreadyExited, ctx);
       return;
     }

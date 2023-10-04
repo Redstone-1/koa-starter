@@ -1,4 +1,4 @@
-import httpCodes from '../../../error/httpCodes';
+import httpCodes from '../../error/httpCodes';
 
 // ========== 用户模块错误 ==========
 export const userFormateError = {

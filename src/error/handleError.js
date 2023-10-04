@@ -8,7 +8,7 @@ export const requestError = {
 };
 
 export const tokenExpiredError = {
-  code: httpCodes.BAD_REQUEST,
+  code: httpCodes.UNAUTHORIZED,
   message: 'token已过期',
   result: null,
 };

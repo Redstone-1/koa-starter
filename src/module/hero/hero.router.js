@@ -1,7 +1,8 @@
 import KoaRouter from 'koa-router';
 import { auth } from '../../middleware/auth.middleware';
 import heroController from './hero.controller';
-import { verifyHeroNotExist, verifyHeroIsExist } from './middleware/hero.middleware'
+import { verifyHeroNotExist, verifyHeroIsExist } from './hero.middleware'
+import { verifyFileSize } from '../upload/upload.middleware';
 
 const router = new KoaRouter({ prefix: '/hero' });
 
@@ -15,9 +16,12 @@ router.post('/delete', auth, verifyHeroNotExist, heroController.delete);
 router.post('/update', auth, verifyHeroNotExist, heroController.update);
 
 // 获取单个英雄信息
-router.get('/getHero', heroController.get);
+router.post('/getHero', heroController.get);
 
 // 获取英雄列表
 router.post('/getHeroList', heroController.getAll);
+
+// 上传英雄图片
+router.post('/upload', auth, verifyFileSize, heroController.saveImage);
 
 export default router;

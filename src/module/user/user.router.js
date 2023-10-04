@@ -4,7 +4,7 @@ import {
   verifyUser,
   crpytPassword,
   verifyLogin,
-} from './middleware/user.middleware';
+} from './user.middleware';
 import { auth } from '../../middleware/auth.middleware';
 import userController from './user.controller';
 

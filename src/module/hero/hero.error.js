@@ -1,4 +1,4 @@
-import httpCodes from '../../../error/httpCodes';
+import httpCodes from '../../error/httpCodes';
 
 // ========== 英雄模块错误 ==========
 export const heroDoesNotExist = {
