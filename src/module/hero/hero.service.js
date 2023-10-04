@@ -1,7 +1,7 @@
 import { Op } from '@sequelize/core';
 import sequelize from '../../db/sequelize';
 import Hero from './hero.model';
-import HeroImage from './image.model';
+import HeroImage from './sub-module/image/image.model';
 import { formatTime } from '../../utils/formatTime';
 
 class HeroService {
@@ -25,12 +25,12 @@ class HeroService {
     const t = await sequelize.transaction()
     try {
       let heroImage = []
-      const whereHeroOpt = { transaction: t };
+      const whereHeroOpt = {};
 
       heroId && Object.assign(whereHeroOpt, { heroId });
       heroName && Object.assign(whereHeroOpt, { heroName });
 
-      const hero = await Hero.findOne(whereHeroOpt);
+      const hero = await Hero.findOne({ where: whereHeroOpt, transaction: t });
 
       if (imgIds) {
         heroImage = await HeroImage.findAll(

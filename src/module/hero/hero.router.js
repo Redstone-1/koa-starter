@@ -1,8 +1,8 @@
 import KoaRouter from 'koa-router';
 import { auth } from '../../middleware/auth.middleware';
 import heroController from './hero.controller';
-import { verifyHeroNotExist, verifyHeroIsExist } from './hero.middleware'
-import { verifyFileSize } from '../upload/upload.middleware';
+import { verifyHeroNotExist, verifyHeroIsExist } from './helper/hero.middleware'
+import { verifyFileSize } from '../upload/helper/upload.middleware';
 
 const router = new KoaRouter({ prefix: '/hero' });
 

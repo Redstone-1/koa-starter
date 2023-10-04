@@ -1,9 +1,9 @@
-import Hero from './hero.model';
+import Hero from '../hero.model';
 import {
   heroDoesNotExist,
   heroAlreadyExited,
 } from './hero.error';
-import { serverError } from '../../error/handleError'
+import { serverError } from '../../../error/handleError'
 
 export const verifyHeroNotExist = async (ctx, next) => {
   try {

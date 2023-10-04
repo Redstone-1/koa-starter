@@ -1,5 +1,5 @@
 import { DataTypes } from 'sequelize';
-import sequelize from '../../db/sequelize';
+import sequelize from '../../../../db/sequelize';
 
 const HeroImage = sequelize.define('HeroImage', {
   imgId: {

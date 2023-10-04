@@ -1,6 +1,6 @@
 import KoaRouter from 'koa-router';
 import { auth } from '../../middleware/auth.middleware';
-import { verifyFileSize } from './upload.middleware';
+import { verifyFileSize } from './helper/upload.middleware';
 
 const router = new KoaRouter({ prefix: '/file' });
 

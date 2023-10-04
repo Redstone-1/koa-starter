@@ -1,5 +1,5 @@
 import bcrypt from 'bcryptjs';
-import userService from './user.service';
+import userService from '../user.service';
 import {
   userFormateError,
   userAlreadyExited,
@@ -8,7 +8,7 @@ import {
   userLoginError,
   invalidPassword
 } from './user.error';
-import { serverError } from '../../error/handleError'
+import { serverError } from '../../../error/handleError'
 
 export const userValidator = async (ctx, next) => {
   try {

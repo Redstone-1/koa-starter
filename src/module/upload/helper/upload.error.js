@@ -1,4 +1,4 @@
-import httpCodes from "../../error/httpCodes";
+import httpCodes from "../../../error/httpCodes";
 
 export const overLimitSize = {
   code: httpCodes.BAD_REQUEST,

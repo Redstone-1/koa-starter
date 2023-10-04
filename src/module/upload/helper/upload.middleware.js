@@ -1,4 +1,4 @@
-import { serverError } from "../../error/handleError";
+import { serverError } from "../../../error/handleError";
 import { overLimitSize } from './upload.error';
 
 export const verifyFileSize = async (ctx, next) => {
