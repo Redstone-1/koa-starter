@@ -55,8 +55,8 @@ class HeroController {
 
   async get(ctx) {
     try {
-      const { heroId, imgIds } = ctx.request.body;
-      const res = await heroService.get({ heroId, imgIds });
+      const { heroId, heroName, imgIds } = ctx.request.body;
+      const res = await heroService.get({ heroId, heroName, imgIds });
 
       if (res) {
         ctx.body = genResponse(httpCodes.OK, '英雄信息获取成功', res)

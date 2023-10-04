@@ -7,9 +7,13 @@ import { formatTime } from '../../utils/formatTime';
 class HeroService {
   async create({ heroName, date, strongLevel, position, imgIds = '' }) {
     try {
-      const hero = await Hero.create(
-        { heroName, date, strongLevel, position, imgIds }
-      );
+      const hero = await Hero.create({
+        heroName,
+        date,
+        strongLevel,
+        position,
+        imgIds: (imgIds?.split(',') || []).filter(id => id).join(',')
+      });
       return hero ? true : false
     } catch (error) {
       console.log('英雄新增失败', error)
@@ -17,22 +21,22 @@ class HeroService {
     }
   }
 
-  async get({ heroId = '', imgIds = '' }) {
+  async get({ heroId = '', heroName = '', imgIds = '' }) {
     const t = await sequelize.transaction()
     try {
       let heroImage = []
       const whereHeroOpt = { transaction: t };
 
       heroId && Object.assign(whereHeroOpt, { heroId });
+      heroName && Object.assign(whereHeroOpt, { heroName });
 
-      const res = await Hero.findOne(whereHeroOpt);
-
+      const hero = await Hero.findOne(whereHeroOpt);
 
       if (imgIds) {
         heroImage = await HeroImage.findAll(
           {
             where: {
-              imgId: imgIds.split(',') || []
+              imgId: imgIds.split(',').filter(id => id) || []
             },
             attributes: ['imgName', 'imgId'],
             transaction: t
@@ -40,16 +44,16 @@ class HeroService {
         );
       }
 
-      if (res) {
-        const { date, createdAt, updatedAt } = res.dataValues
+      if (hero) {
+        const { date, createdAt, updatedAt } = hero.dataValues
         const { date: newDate } = formatTime({ date }, 'YYYY-MM-DD');
         const {
           createdAt: newCreatedAt,
           updatedAt: newUpdatedAt
         } = formatTime({ createdAt, updatedAt });
 
-        res.dataValues = {
-          ...res.dataValues,
+        hero.dataValues = {
+          ...hero.dataValues,
           date: newDate,
           heroImage,
           createdAt: newCreatedAt,
@@ -57,7 +61,7 @@ class HeroService {
         };
       }
       await t.commit()
-      return res ? res.dataValues : null;
+      return hero ? hero.dataValues : null;
     } catch (error) {
       console.log('英雄新增失败', error)
       t.rollback()
@@ -119,7 +123,7 @@ class HeroService {
       date && Object.assign(newHero, { date });
       strongLevel && Object.assign(newHero, { strongLevel });
       position && Object.assign(newHero, { position });
-      imgIds && Object.assign(newHero, { imgIds });
+      imgIds && Object.assign(newHero, { imgIds: (imgIds?.split(',') || []).filter(id => id).join(',') });
 
       const hero = await Hero.update(newHero, { where: whereOpt })
       return hero?.[0] > 0
