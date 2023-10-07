@@ -21,6 +21,6 @@
     "noImplicitReturns": true,
     "skipLibCheck": true
   },
-  "include": ["src"],
+  "include": ["src", "package.json", "log4js.json"],
   "exclude": ["lib"]
 }
