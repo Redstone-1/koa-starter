@@ -1,10 +1,10 @@
 {
-  "name": "your-project-name",
+  "name": "full-stack-back-koa",
   "private": false,
   "version": "0.0.1",
   "main": "./index.js",
   "license": "MIT",
-  "author": "your name",
+  "author": "xiwenge",
   "scripts": {
     "dev": "nodemon",
     "lint": "eslint . --ext '.js,.ts' --fix",
