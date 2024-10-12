@@ -35,6 +35,6 @@ const Hero = sequelize.define('Hero', {
 });
 
 // 本地开发，更改 model 数据结构后把此功能打开同步表模型，生产上 model 是固定的，不要使用
-// Hero.sync({ alter: true }).then(() => console.log('同步成功')).catch(() => console.log('同步失败'));
+Hero.sync({ alter: true }).then(() => console.log('同步成功')).catch(() => console.log('同步失败'));
 
 export default Hero;

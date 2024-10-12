@@ -16,6 +16,6 @@ const HeroImage = sequelize.define('HeroImage', {
   },
 });
 
-// HeroImage.sync({ alter: true }).then(() => console.log('同步成功')).catch(() => console.log('同步失败'));
+HeroImage.sync({ alter: true }).then(() => console.log('同步成功')).catch(() => console.log('同步失败'));
 
 export default HeroImage;
